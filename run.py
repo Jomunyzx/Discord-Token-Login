@@ -1,21 +1,60 @@
-import json
-import requests
+import json, requests, os, platform, struct, re, subprocess, sys
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service  # Import the Service class
-import os
+from selenium.webdriver.chrome.service import Service
 from colorama import Fore
 from colorama import Style
 
-## Find here your ChromeDriver version and download it to this folder: https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json
+## Find ChromeDriver here: https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json
 
-if not os.path.exists("chromedriver.exe"):
+os_name = platform.system()
+arch = '64' if struct.calcsize("P") * 8 == 64 else '32'
+
+if os_name == 'Windows':
+    os_version = 'win' + arch
+elif os_name == 'Darwin':
+    machine = platform.machine()
+    if 'arm' in machine:
+        os_version = 'mac-arm' + arch
+    else:
+        os_version = 'mac-x' + arch
+elif os_name == 'Linux':
+    os_version = 'linux' + arch
+else:
+    os_version = 'unknown'
+
+def get_chrome_version():
+    cmds = {
+        'win': r'wmic datafile where name="C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe" get Version /value',
+        'linux': 'google-chrome --version',
+        'darwin': r'/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --version'
+    }
+    
+    cmd = cmds.get(sys.platform[:3])
+    if not cmd:
+        return "Unsupported OS"
+    
+    result = subprocess.run(cmd, shell=True, capture_output=True, text=True).stdout
+    version = re.search(r'(\d+\.\d+\.\d+\.\d+)', result)
+    
+    return version.group(1) if version else "Version not found"
+
+latest_link = f'https://storage.googleapis.com/chrome-for-testing-public/{get_chrome_version()}/{os_version}/chromedriver-{os_version}.zip'
+
+def err():
+    print('\n')
     res = requests.get(
         "https://chromedriver.storage.googleapis.com/LATEST_RELEASE")
     ver = res.text
-    download_url = "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json"
+    download_url = f'https://storage.googleapis.com/chrome-for-testing-public/{ver}/{os_version}/chrome-{os_version}.zip'
     print(
-        f"[ ERROR ] Driver not found \n1. please download latest chromedriver from this link and put .exe file in this directory \n2. make sure your chrome is updated \n[{Fore.YELLOW} {download_url} ] ")
+        f"[ ERROR ] Driver not found \n1. please download latest chromedriver from this link and put .exe file in this directory \n2. make sure your chrome is updated \n[{Fore.YELLOW} {latest_link} ] ")
+    print('\n')
+    input()
+    print('\n')
     exit()
+
+if not os.path.exists("chromedriver.exe"):
+    err()
 
 def clear():
     print("\n" * 100)
@@ -56,33 +95,31 @@ print('''
 ''')
 
 def tokenLogin(token):
-    src = request.get('https://discord.com/api/v6/users/@me',
-                      headers=headers, timeout=10)
-    if src.status_code == 403:
-        print("Token Is Invalid")
-        startmenu()
-    elif src.status_code == 401:
-        print("Token Is Invalid")
-        startmenu()
-    else:
-        opts = webdriver.ChromeOptions()
-        opts.add_experimental_option("detach", True)
+    try:
+        src = request.get('https://discord.com/api/v6/users/@me', headers=headers, timeout=10)
+        if src.status_code == 403 or src.status_code == 401:
+            print("Token Is Invalid")
+            startmenu()
+        else:
+            opts = webdriver.ChromeOptions()
+            opts.add_experimental_option("detach", True)
+            service = Service('chromedriver.exe')
+            driver = webdriver.Chrome(service=service, options=opts)
+            script = """
+                function login(token) {
+                    setInterval(() => {
+                        document.body.appendChild(document.createElement `iframe`).contentWindow.localStorage.token = `"${token}"`
+                    }, 50);
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2500);
+                }
+            """
+            driver.get("https://discord.com/login")
+            driver.execute_script(script + f'\nlogin("{token}")')
+    except Exception as e:
+        err()
 
-        service = Service('chromedriver.exe')
-        driver = webdriver.Chrome(service=service, options=opts)
-
-        script = """
-              function login(token) {
-              setInterval(() => {
-              document.body.appendChild(document.createElement `iframe`).contentWindow.localStorage.token = `"${token}"`
-              }, 50);
-              setTimeout(() => {
-              location.reload();
-              }, 2500);
-              }
-              """
-        driver.get("https://discord.com/login")
-        driver.execute_script(script + f'\nlogin("{token}")')
 
 def tokeninfo():
     src = request.get(
