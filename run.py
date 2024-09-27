@@ -1,4 +1,4 @@
-import json, requests, os, platform, struct, re, subprocess, sys
+import json, requests, os, platform, struct, re, subprocess, sys, time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.firefox.service import Service
@@ -10,22 +10,6 @@ from colorama import Style
 ## Find ChromeDriver here: https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json
 
 os_name = platform.system()
-
-def err():
-    print('\n')
-    res = requests.get(
-        "https://chromedriver.storage.googleapis.com/LATEST_RELEASE")
-    ver = res.text
-    download_url = f'https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json'
-    print(
-        f"[ ERROR ] Driver not found \n1. please download latest chromedriver from this link and put .exe file in this directory \n2. make sure your chrome is updated \n[{Fore.YELLOW} {latest_link} ] ")
-    print('\n')
-    input()
-    print('\n')
-    exit()
-
-if not os.path.exists("chromedriver.exe"):
-    err()
 
 def clear():
     print("\n" * 100)
@@ -89,7 +73,7 @@ def tokenLoginGoogle(token):
             driver.get("https://discord.com/login")
             driver.execute_script(script + f'\nlogin("{token}")')
     except Exception as e:
-        err()
+        print(f'\n\n Please download the correct webdriver version (it depends on your browser version). \n You can download ChromeDriver here: \n[{Fore.YELLOW} https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json {Fore.WHITE}')
 
 def tokenLoginFirefox(token):
     try:
@@ -121,7 +105,8 @@ def tokenLoginFirefox(token):
     
     except Exception as e:
         print(f"An error occurred: {e}")
-        err()
+        print(f'\n\n Please download the correct webdriver version (it depends on your browser version). \n You can download MozilaDriver here: \n[{Fore.YELLOW} https://github.com/mozilla/geckodriver/releases {Fore.WHITE}')
+
 
 def tokenLoginSafari(token):
     try:
@@ -148,10 +133,9 @@ def tokenLoginSafari(token):
             driver.execute_script(script + f'\nlogin("{token}")')
     except Exception as e:
         print(f"An error occurred: {e}")
-        err()
+        print(f'\n\n Please download the correct webdriver version (it depends on your browser version). \n You can download SafariDriver here: \n{Fore.YELLOW} https://developer.apple.com/documentation/webkit/testing_with_webdriver_in_safari/ {Fore.WHITE}')
 
-def tokenLogin(token):
-    try:
+def tokenLoginEdge(token):
         headers = {
             'Authorization': token
         }
@@ -177,10 +161,7 @@ def tokenLogin(token):
             """
             driver.get("https://discord.com/login")
             driver.execute_script(script + f'\nlogin("{token}")')
-    
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        err()
+
 
 def tokeninfo():
     src = request.get(
@@ -212,13 +193,20 @@ def startmenu():
     elif keywrd == "2":
         if os_name == "Windows":
             try:
+                print(f'Logging in with Microsoft Edge..')
                 tokenLoginEdge(token)
+                startmenu()
             except:
+                print(f'\n\n Please download the correct webdriver version (it depends on your browser version). \n You can download EdgeDriver here: \n[{Fore.YELLOW} https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/ \n {Fore.WHITE}')
+                print(f'Microsoft edge driver not found.. Trying Google Chrome')
                 tokenLoginGoogle(token)
+                startmenu()
         elif os_name == "Darwin":
             tokenLoginSafari(token)
+            startmenu()
         elif os_name == "Linux":
             tokenLoginFirefox(token)
+            startmenu()
         else:
             print(f'\n\n os not supported.. \n')
             time.sleep(500)
@@ -229,3 +217,4 @@ def startmenu():
         startmenu()
 
 startmenu()
+
