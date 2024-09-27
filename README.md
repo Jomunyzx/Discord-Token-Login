@@ -24,5 +24,5 @@ Before running this script, make sure you have the following installed:
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/yourusername/discord-token-login.git
+   git clone https://github.com/jomunyzx/discord-token-login.git
    cd discord-token-login
