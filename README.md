@@ -1,38 +1,24 @@
 # Discord Token Login Script
 
-A Python script to login to a Discord account using a token, with support for multiple browsers (Chrome, Firefox, Edge, Safari) and cross-platform compatibility (Windows, macOS, Linux).
+This Python script allows you to log into Discord using a token, while ensuring that your ChromeDriver is compatible with your installed Chrome version. If ChromeDriver is not present or does not match, the script provides a direct download link for the correct version.
 
 ## Features
-- **Login to Discord** using a token across different browsers and operating systems
-- **Fetch token information** (username, email, etc.)
-- Simple command-line interface for easy navigation
-- Supports multiple operating systems:
-  - Windows (Chrome, Edge)
-  - macOS (Safari)
-  - Linux (Firefox)
 
-## Prerequisites
+- **Token-Based Discord Login**: Automate logging into Discord using your token.
+- **ChromeDriver Version Detection**: Automatically checks the installed version of Google Chrome and ChromeDriver.
+- **Automatic ChromeDriver Download Links**: Provides direct download links for the correct ChromeDriver version if it's missing or incompatible.
+- **Error Handling**: The script displays error messages only when actual errors occur, ensuring smooth operation.
 
-Before running this script, ensure that the following are installed:
+## Requirements
 
-- **Python 3.x**
-- **Google Chrome**, **Firefox**, **Edge**, or **Safari**
-- **ChromeDriver**, **GeckoDriver**, or **EdgeDriver**, depending on your browser and OS
+Before running the script, ensure you have the following installed:
 
-### Browser-Specific Drivers:
-- **ChromeDriver**: [Download here](https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json)
-- **GeckoDriver (Firefox)**: [Download here](https://github.com/mozilla/geckodriver/releases)
-- **EdgeDriver**: [Download here](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
-
-### Python Libraries:
-- `requests`
-- `selenium`
-- `colorama`
+- **Python 3.x**: Download it from [Python's official website](https://www.python.org/downloads/).
+- **Google Chrome**: Make sure Google Chrome is installed and up to date.
+- **ChromeDriver**: The script will automatically handle ChromeDriver compatibility, but you can download it from [here](https://googlechromelabs.github.io/chrome-for-testing/).
 
 ## Installation
 
 1. Clone this repository:
-
    ```bash
-   git clone https://github.com/jomunyzx/discord-token-login.git
-   cd discord-token-login
+   git clone https://github.com/your-username/discord-token-login-script.git
