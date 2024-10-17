@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.options import Options
 from colorama import Fore
 from colorama import Style
 
-path_to_chromedriver = r'C:/Users/Tadeas/Documents/PITHON/Discord/ham/chromedriver.exe'
+path_to_chromedriver = r'path/to/your/chromedriver.exe'
 
 def display_ascii_art():
     print('''
