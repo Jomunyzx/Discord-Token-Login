@@ -84,7 +84,20 @@ display_ascii_art()
 print("Welcome To Discord Token Login       Dev:H4ndshake")
 print("")
 request = requests.Session()
-token = input("Enter Token > ")
+working_token = False
+
+while True:
+    token = input("Enter Token > ")
+
+    headers = {"Authorization": token, "User-Agent": "Mozilla/5.0"}
+    response = requests.get("https://discord.com/api/v9/users/@me", headers=headers)
+
+    if response.status_code == 200:
+        break
+    else:
+        print("[*] Token Is Invalid")
+
+
 headers = {
     'Authorization': token,
     'Content-Type': 'application/json',
