@@ -87,6 +87,9 @@ request = requests.Session()
 
 while True:
     token = input("Enter Token > ")
+    if token == "exit":
+        print("Bye!")
+        exit()
 
     headers = {"Authorization": token, "User-Agent": "Mozilla/5.0"}
     response = requests.get("https://discord.com/api/v9/users/@me", headers=headers)
@@ -94,7 +97,7 @@ while True:
     if response.status_code == 200:
         break
     else:
-        print("[*] Token Is Invalid")
+        print("\n[*] Token Is Invalid\n")
 
 
 headers = {
