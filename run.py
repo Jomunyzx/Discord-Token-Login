@@ -84,7 +84,6 @@ display_ascii_art()
 print("Welcome To Discord Token Login       Dev:H4ndshake")
 print("")
 request = requests.Session()
-working_token = False
 
 while True:
     token = input("Enter Token > ")
