@@ -16,16 +16,16 @@
 ## 💻 How to Use
 
 1. Clone or download this repository.
-     ```bash
-     git clone https://github.com/Jomunyzx/Discord-Token-Login.git
-     ```
+```bash
+git clone https://github.com/Jomunyzx/Discord-Token-Login.git
+```
 2. Make sure you have:
    - Python 3.x installed
    - Google Chrome installed
    - `chromedriver.exe` placed and path correctly set in the script:
-     ```python
-     path_to_chromedriver = r'path/to/your/chromedriver.exe'
-     ```
+```python
+path_to_chromedriver = r'path/to/your/chromedriver.exe'
+```
 3. Run the script:
 
 ```bash
