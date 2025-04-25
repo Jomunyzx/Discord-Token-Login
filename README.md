@@ -1,24 +1,33 @@
-# Discord Token Login Script
+# 🛡️ Discord Token Login Tool
 
-This Python script allows you to log into Discord using a token, while ensuring that your ChromeDriver is compatible with your installed Chrome version. If ChromeDriver is not present or does not match, the script provides a direct download link for the correct version.
+---
 
-## Features
+## ✨ Features
 
-- **Token-Based Discord Login**: Automate logging into Discord using your token.
-- **ChromeDriver Version Detection**: Automatically checks the installed version of Google Chrome and ChromeDriver.
-- **Automatic ChromeDriver Download Links**: Provides direct download links for the correct ChromeDriver version if it's missing or incompatible.
-- **Error Handling**: The script displays error messages only when actual errors occur, ensuring smooth operation.
+- Cool ASCII art welcome screen
+- Detects your installed Chrome version (Windows only)
+- Suggests the correct ChromeDriver version automatically
+- Validates Discord tokens
+- Retrieves and displays user details (username, ID, email, phone, avatar, verification status)
+- Automates login to Discord via token using Selenium and ChromeDriver
 
-## Requirements
+---
 
-Before running the script, ensure you have the following installed:
+## 💻 How to Use
 
-- **Python 3.x**: Download it from [Python's official website](https://www.python.org/downloads/).
-- **Google Chrome**: Make sure Google Chrome is installed and up to date.
-- **ChromeDriver**: The script will automatically handle ChromeDriver compatibility, but you can download it from [here](https://googlechromelabs.github.io/chrome-for-testing/).
+1. Clone or download this repository.
+     ```bash
+     git clone https://github.com/Jomunyzx/Discord-Token-Login.git
+     ```
+2. Make sure you have:
+   - Python 3.x installed
+   - Google Chrome installed
+   - `chromedriver.exe` placed and path correctly set in the script:
+     ```python
+     path_to_chromedriver = r'path/to/your/chromedriver.exe'
+     ```
+3. Run the script:
 
-## Installation
-
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/Jomunyzx/Discord-Token-Login.git
+```bash
+python run.py
+```
